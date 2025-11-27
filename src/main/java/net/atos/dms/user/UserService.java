@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final UserRepository repo; // assume you have one
+    private final UserRepository repo;
 
     public UserService(UserRepository repo) {
         this.repo = repo;
@@ -20,12 +20,11 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
-    // optional helper used by AuthController etc
     public User findOrCreate(String email, String plainPassword, String nid) {
         return repo.findByEmail(email).orElseGet(() -> {
             User u = new User();
             u.setEmail(email);
-            u.setPassword(plainPassword); // encode before saving in real app
+            u.setPassword(plainPassword);
             u.setNid(nid);
             return repo.save(u);
         });

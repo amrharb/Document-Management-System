@@ -15,17 +15,13 @@ import java.util.Collections;
 public class User implements UserDetails {
     @Id
     private String id;
-
-    // your code expects getEmail(), getNid(), getPassword()
     private String email;
     @JsonIgnore
     private String password;
     private String nid;
 
-    // optional: roles or authorities
     private String role = "ROLE_USER";
 
-    // UserDetails implementations
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
@@ -33,7 +29,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email; // map email to username
+        return email;
     }
 
     @Override
@@ -42,11 +38,22 @@ public class User implements UserDetails {
     }
 
     @Override
-    public boolean isAccountNonExpired() { return true; }
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
     @Override
-    public boolean isAccountNonLocked() { return true; }
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
     @Override
-    public boolean isCredentialsNonExpired() { return true; }
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
     @Override
-    public boolean isEnabled() { return true; }
+    public boolean isEnabled() {
+        return true;
+    }
 }

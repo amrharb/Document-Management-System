@@ -24,7 +24,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    // optional: if you have a UserDetailsService it will be used to fill authorities; otherwise anonymous/empty
     @Autowired(required = false)
     private UserDetailsService userDetailsService;
 
@@ -52,7 +51,6 @@ public class JwtFilter extends OncePerRequestFilter {
                         authorities = userDetails.getAuthorities();
                     } else {
                         principal = username;
-                        // leave authorities empty
                     }
 
                     UsernamePasswordAuthenticationToken authentication =

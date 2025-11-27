@@ -25,9 +25,6 @@ public class JwtUtil {
         this.expirationMillis = expMinutes * 60L * 1000L;
     }
 
-    /**
-     * Generate a token with given subject and arbitrary claims map.
-     */
     public String generate(String subject, Map<String, Object> claims) {
         long now = System.currentTimeMillis();
         return Jwts.builder()
@@ -66,9 +63,6 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
-    /**
-     * Expose expiration millis for callers that need to compute absolute exp time.
-     */
     public long getExpirationMillis() {
         return expirationMillis;
     }

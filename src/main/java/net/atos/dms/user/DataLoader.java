@@ -15,7 +15,6 @@ public class DataLoader {
             if (!userRepository.existsByEmail(testEmail)) {
                 User u = new User();
                 u.setEmail(testEmail);
-                // bcrypt-encode the password "password123"
                 u.setPassword(passwordEncoder.encode("password123"));
                 u.setNid("TESTNID001");
                 userRepository.save(u);

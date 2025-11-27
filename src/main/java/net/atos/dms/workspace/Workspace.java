@@ -10,23 +10,15 @@ import jakarta.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Objects;
 
-/**
- * Workspace entity for MongoDB.
- * Minimal edit: mark the getter as WRITE_ONLY so ownerNid is stored but not returned in JSON.
- */
 @Document(collection = "workspaces")
 public class Workspace {
 
     @Id
     private String id;
 
-    /**
-     * Owner identifier (nid) — will hold the user's email (set in controller from Authentication).
-     * Keep field as-is; we'll hide it from JSON by annotating the getter.
-     */
     @Email
     @NotNull
-    private String ownerNid;
+    private String ownerEmail;
 
     private String name;
 
@@ -36,14 +28,12 @@ public class Workspace {
         this.createdAt = Instant.now();
     }
 
-    public Workspace(String id, String ownerNid, String name, Instant createdAt) {
+    public Workspace(String id, String ownerEmail, String name, Instant createdAt) {
         this.id = id;
-        this.ownerNid = ownerNid;
+        this.ownerEmail = ownerEmail;
         this.name = name;
         this.createdAt = createdAt == null ? Instant.now() : createdAt;
     }
-
-    // --- getters & setters ---
 
     public String getId() {
         return id;
@@ -53,16 +43,13 @@ public class Workspace {
         this.id = id;
     }
 
-    /**
-     * Hide ownerNid from JSON serialization while keeping it writable.
-     */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    public String getOwnerNid() {
-        return ownerNid;
+    public String getOwnerEmail() {
+        return ownerEmail;
     }
 
-    public void setOwnerNid(String ownerNid) {
-        this.ownerNid = ownerNid;
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
     public String getName() {
@@ -81,8 +68,6 @@ public class Workspace {
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
-
-    // equals/hashCode/toString (ownerNid intentionally omitted from toString to avoid accidental leaks)
 
     @Override
     public boolean equals(Object o) {
