@@ -72,7 +72,6 @@ public class DocController {
             if (body.containsKey("tags")) {
                 Object tagsObj = body.get("tags");
                 if (tagsObj instanceof java.util.List) {
-                    // unchecked cast but acceptable here
                     d.setTags((List<String>) tagsObj);
                 }
             }

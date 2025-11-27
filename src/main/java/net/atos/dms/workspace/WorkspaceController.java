@@ -20,7 +20,6 @@ public class WorkspaceController {
         return repo.findAll();
     }
 
-    // Explicit name in @PathVariable avoids need for -parameters compiler flag
     @GetMapping("/{id}")
     public ResponseEntity<Workspace> get(@PathVariable("id") String id) {
         return repo.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
@@ -28,7 +27,7 @@ public class WorkspaceController {
 
     @PostMapping
     public Workspace create(@RequestBody Workspace w, Authentication auth) {
-        w.setOwnerNid(auth.getName());
+        w.setOwnerEmail(auth.getName());
         return repo.save(w);
     }
 

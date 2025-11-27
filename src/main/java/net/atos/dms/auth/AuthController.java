@@ -34,8 +34,8 @@ public class AuthController {
     }
 
     public static class LoginRequest {
-        public String username; // can be email
-        public String email;    // alias
+        public String username;
+        public String email;
         public String password;
     }
 
@@ -52,7 +52,7 @@ public class AuthController {
     public static class RegisterRequest {
         public String email;
         public String password;
-        public String nid; // optional
+        public String nid;
     }
 
     @PostMapping("/register")
@@ -76,7 +76,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
-        // accept either username or email field
         String username = (req == null) ? null : (req.username == null || req.username.isBlank() ? req.email : req.username);
         String password = (req == null) ? null : req.password;
 
@@ -89,7 +88,6 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(username, password)
             );
 
-            // build extra claims (example: nid if available on principal)
             Map<String, Object> extra = new HashMap<>();
             Object principal = auth.getPrincipal();
             if (principal instanceof UserDetails) {
@@ -112,17 +110,14 @@ public class AuthController {
 
             return ResponseEntity.ok(new LoginResponse(token, expSecs));
         } catch (Exception ex) {
-            // do not leak internal details; return 401
             return ResponseEntity.status(401).body(Map.of("error", "invalid credentials"));
         }
     }
 
-    // We can't access JwtUtil.expirationMillis (private) — compute from property fallback for response
     private long jwtUtilExpirationMillisFallback() {
         try {
             String s = System.getProperty("dms.jwt.exp-minutes");
             if (s == null) {
-                // try environment / spring property via System.getenv
                 s = System.getenv("DMS_JWT_EXP_MINUTES");
             }
             long minutes = (s == null || s.isBlank()) ? 1440L : Long.parseLong(s);
