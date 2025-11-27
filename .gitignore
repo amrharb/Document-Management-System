@@ -1,0 +1,40 @@
+# Maven / Java
+target/
+storage/
+*.log
+*.class
+*.war
+*.jar
+
+# Build and IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Lombok
+lombok.config
+
+# Secrets and env
+.env
+*.properties
+/secret-*.json
+
+# Docker
+docker-compose.override.yml
+
+# Node, if any
+node_modules/
+
+# IntelliJ
+out/
+
+# Eclipse
+.settings/
+.metadata/
+
+# JetBrains
+*.iws
